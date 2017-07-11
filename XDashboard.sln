@@ -1,0 +1,25 @@
+
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "XDashboard", "XDashboard\XDashboard.shproj", "{D74B27B9-77D8-437B-99BC-2087FFA1550E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XDashboard.iOS", "iOS\XDashboard.iOS.csproj", "{679EAA69-9835-4F3B-AA28-F7A8A31C6F0D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|iPhoneSimulator = Debug|iPhoneSimulator
+		Release|iPhone = Release|iPhone
+		Release|iPhoneSimulator = Release|iPhoneSimulator
+		Debug|iPhone = Debug|iPhone
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{679EAA69-9835-4F3B-AA28-F7A8A31C6F0D}.Debug|iPhoneSimulator.ActiveCfg = Debug|iPhoneSimulator
+		{679EAA69-9835-4F3B-AA28-F7A8A31C6F0D}.Debug|iPhoneSimulator.Build.0 = Debug|iPhoneSimulator
+		{679EAA69-9835-4F3B-AA28-F7A8A31C6F0D}.Release|iPhone.ActiveCfg = Release|iPhone
+		{679EAA69-9835-4F3B-AA28-F7A8A31C6F0D}.Release|iPhone.Build.0 = Release|iPhone
+		{679EAA69-9835-4F3B-AA28-F7A8A31C6F0D}.Release|iPhoneSimulator.ActiveCfg = Release|iPhoneSimulator
+		{679EAA69-9835-4F3B-AA28-F7A8A31C6F0D}.Release|iPhoneSimulator.Build.0 = Release|iPhoneSimulator
+		{679EAA69-9835-4F3B-AA28-F7A8A31C6F0D}.Debug|iPhone.ActiveCfg = Debug|iPhone
+		{679EAA69-9835-4F3B-AA28-F7A8A31C6F0D}.Debug|iPhone.Build.0 = Debug|iPhone
+	EndGlobalSection
+EndGlobal
