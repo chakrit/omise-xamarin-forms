@@ -10,30 +10,41 @@ namespace XDashboard
 {
     public class App : Application
     {
-        Entry SecretKeyEntry { get; set; }
-        Editor ChargeListEditor { get; set; }
-        Button CallButton { get; set; }
+        Entry PublicKeyEntry { get; set; }
+        Entry NameEntry { get; set; }
+        Entry NumberEntry { get; set; }
+        Entry ExpirationMonthEntry { get; set; }
+        Entry ExpirationYearEntry { get; set; }
+        Entry SecurityCodeEntry { get; set; }
+
+        Button TokenizeButton { get; set; }
+        Entry TokenEntry { get; set; }
 
         public App()
         {
-            SecretKeyEntry = new Entry { Placeholder = "skey_xxx" };
-            ChargeListEditor = new Editor
-            {
-                Text = "chrg_xxx",
-                VerticalOptions = LayoutOptions.FillAndExpand,
-                MinimumHeightRequest = 176.0
-            };
+            PublicKeyEntry = new Entry { Text = "pkey_xxx" };
+            NameEntry = new Entry { Text = "John Appleseed" };
+            NumberEntry = new Entry { Text = "4242424242424242" };
+            ExpirationMonthEntry = new Entry { Text = "1" };
+            ExpirationYearEntry = new Entry { Text = "2020" };
+            SecurityCodeEntry = new Entry { Text = "123" };
 
-            CallButton = new Button { Text = "Call Omise API" };
-            CallButton.Clicked += (sender, e) =>
+            TokenizeButton = new Button { Text = "Tokenize" };
+            TokenEntry = new Entry { Text = "tokn_xxx" };
+
+            TokenizeButton.Clicked += (sender, e) =>
             {
                 DispatchQueue.DefaultGlobalQueue.DispatchAsync(() =>
                 {
-                    var client = new Client(skey: SecretKeyEntry.Text);
-                    var task = client.Charges.GetList(
-                        order: Ordering.ReverseChronological,
-                        limit: 3
-                    );
+                    var client = new Client(PublicKeyEntry.Text);
+                    var task = client.Tokens.Create(new CreateTokenRequest
+                    {
+                        Name = NameEntry.Text,
+                        Number = NumberEntry.Text,
+                        ExpirationMonth = int.Parse(ExpirationMonthEntry.Text),
+                        ExpirationYear = int.Parse(ExpirationYearEntry.Text),
+                        SecurityCode = SecurityCodeEntry.Text
+                    });
 
                     task.Wait();
 
@@ -41,13 +52,11 @@ namespace XDashboard
                     {
                         if (task.IsFaulted)
                         {
-                            ChargeListEditor.Text = task.Exception.Message;
+                            TokenEntry.Text = task.Exception.Message;
                             return;
                         }
 
-                        ChargeListEditor.Text = task.Result
-                            .Select(chrg => $"{chrg.Id} {chrg.Currency} {chrg.Amount}")
-                            .Aggregate((a, b) => $"{a}\n{b}");
+                        TokenEntry.Text = task.Result.Id;
                     });
                 });
             };
@@ -61,11 +70,16 @@ namespace XDashboard
                     VerticalOptions = LayoutOptions.Center,
                     Orientation = StackOrientation.Vertical,
                     Children = {
-                        new Label { Text = "Secret Key:" },
-                        SecretKeyEntry,
-                        CallButton,
-                        new Label { Text = "Recent Charges:" },
-                        ChargeListEditor,
+                        new Label { Text = "Public Key:" },
+                        PublicKeyEntry,
+                        new Label { Text = "Card Data:" },
+                        NameEntry,
+                        NumberEntry,
+                        ExpirationMonthEntry,
+                        ExpirationYearEntry,
+                        SecurityCodeEntry,
+                        TokenizeButton,
+                        TokenEntry,
                     }
                 }
             };
